@@ -44,9 +44,9 @@
             <TableRow>
 
                 <AutoCompleteTextView
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="Name"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -55,12 +55,12 @@
             <TableRow>
 
                 <TextView
+                    android:id="@+id/dateOfBirth"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:ems="10"
                     android:focusable="false"
                     android:hint="Date of Birth"
-                    android:id="@+id/dateOfBirth"
                     android:padding="2dp"
                     android:textSize="20sp" />
             </TableRow>
@@ -68,6 +68,7 @@
             <TableRow>
 
                 <RadioGroup
+                    android:id="@+id/Question0_group"
                     android:layout_width="340dp"
                     android:layout_height="36dp"
                     android:orientation="horizontal"
@@ -80,27 +81,27 @@
                     app:layout_constraintVertical_bias="0.376">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
+                        android:id="@+id/male"
                         android:layout_width="49dp"
                         android:layout_height="29dp"
                         android:layout_weight="1"
-                        android:text="M"
+                        android:text="Male"
                         tools:layout_editor_absoluteX="32dp"
                         tools:layout_editor_absoluteY="161dp" />
 
                     <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/female"
                         android:layout_width="49dp"
                         android:layout_height="29dp"
                         android:layout_weight="1"
-                        android:text="F"
+                        android:text="Female"
                         app:layout_constraintHorizontal_bias="0.304"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         tools:layout_editor_absoluteY="161dp" />
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/otherGender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -330,19 +331,6 @@
 
 
                     <RadioButton
-                        android:id="@+id/rarely"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="0.5dp"
-                        android:text="Rarely"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.311"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.546" />
-
-                    <RadioButton
                         android:id="@+id/onceAWeek"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -358,7 +346,7 @@
                         android:id="@+id/once2Weeks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Once With 2 Weeks"
+                        android:text="Once every 2 Weeks"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.308"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -377,6 +365,19 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.348" />
+
+                    <RadioButton
+                        android:id="@+id/rarely"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0.5dp"
+                        android:text="Rarely"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.311"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.546" />
 
                 </RadioGroup>
             </TableRow>

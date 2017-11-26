@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut, nextAct;
+            changeEmail, changePassword, sendEmail, remove, signOut, nextAct, webViewAct;
 
     private EditText oldEmail, newEmail, password, newPassword;
     private TextView verifyEmailMessage;
@@ -59,53 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
-                /*else
-                {
-                    if (user.isEmailVerified()) {
-                        Toast.makeText(MainActivity.this,"You are in =)",Toast.LENGTH_LONG).show();
-                    }
-
-                    else {
-
-//---- HERE YOU SEND THE EMAIL
-
-                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("VerificationEmail", "Email sent.");
-                                    Toast.makeText(MainActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                                else
-                                {
-                                    Toast.makeText(MainActivity.this, "Failed send verification email!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                        //Toast.makeText(MainActivity.this,"Check your email first...",Toast.LENGTH_LONG).show();
-                    }
-
-                }
-
-                /*if (!user.isEmailVerified())
-                {
-
-                    user.updateEmail("user@example.com")
-                    user.sendEmailVerification()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("VerificationEmail", "Email sent.");
-                                    }
-                                }
-                            });
-                }*/
             }
         };
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         btnChangeEmail = (Button) findViewById(R.id.change_email_button);
@@ -118,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         sendEmail = (Button) findViewById(R.id.send);
         remove = (Button) findViewById(R.id.remove);
         signOut = (Button) findViewById(R.id.sign_out);
+        webViewAct = (Button) findViewById(R.id.webViewAct);
 
         oldEmail = (EditText) findViewById(R.id.old_email);
         newEmail = (EditText) findViewById(R.id.new_email);
@@ -217,39 +173,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ///////////////////////////////////////////////////////////////////////////////webViewAct
 
-        /*
-        btnChangeEmail = (Button) findViewById(R.id.change_email_button);
-        btnChangePassword = (Button) findViewById(R.id.change_password_button);
-        btnSendResetEmail = (Button) findViewById(R.id.sending_pass_reset_button);
-        btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
-        nextAct= (Button) findViewById(R.id.nextAct);
-        changeEmail = (Button) findViewById(R.id.changeEmail);
-        changePassword = (Button) findViewById(R.id.changePass);
-        sendEmail = (Button) findViewById(R.id.send);
-        remove = (Button) findViewById(R.id.remove);
-        signOut = (Button) findViewById(R.id.sign_out);
-
-        oldEmail = (EditText) findViewById(R.id.old_email);
-        newEmail = (EditText) findViewById(R.id.new_email);
-        password = (EditText) findViewById(R.id.password);
-        newPassword = (EditText) findViewById(R.id.newPassword);
-
-        oldEmail.setVisibility(View.GONE);
-        newEmail.setVisibility(View.GONE);
-        password.setVisibility(View.GONE);
-        newPassword.setVisibility(View.GONE);
-        changeEmail.setVisibility(View.GONE);
-        changePassword.setVisibility(View.GONE);
-        sendEmail.setVisibility(View.GONE);
-        remove.setVisibility(View.GONE);
-
-        ////////////////////////////////////////////////
-        btnChangeEmail.setVisibility(View.GONE);
-        btnChangePassword.setVisibility(View.GONE);
-        //////////////////////////////////////////////////
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        */
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }

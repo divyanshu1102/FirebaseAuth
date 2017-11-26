@@ -18,11 +18,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class BuildProfile extends AppCompatActivity {
 
-    private  RadioGroup user_type, Question1_group, Question2_group, Question3_group, Question4_group;
-    private String[] answers={"-99","-99","-99","-99","-99","-99"};
+    private  RadioGroup user_type, Question0_group, Question1_group, Question2_group, Question3_group, Question4_group;
+    private String[] answers={"-99","-99","-99","-99","-99","-99","-99","-99","-99"};
     private MultiAutoCompleteTextView bio;
+    private TextView name, dateofBirth;
 
     int day, month, year;
     TextView dateOfBirth;
@@ -32,7 +35,12 @@ public class BuildProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_profile);
 
+
+        name= (TextView) findViewById(R.id.name) ; // data 0 done
+        dateofBirth= (TextView) findViewById(R.id.dateOfBirth) ; // data 1 done
+
         user_type= (RadioGroup) findViewById(R.id.radioGroup);
+        Question0_group= (RadioGroup) findViewById(R.id.Question0_group);
         Question1_group= (RadioGroup) findViewById(R.id.Question1_group);
         Question2_group = (RadioGroup) findViewById(R.id.Question2_group);
         Question3_group = (RadioGroup) findViewById(R.id.Question3_group);
@@ -40,7 +48,24 @@ public class BuildProfile extends AppCompatActivity {
 
         bio = (MultiAutoCompleteTextView) findViewById(R.id.bio);
 
-        user_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+        Question0_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {    // data 2
+
+                if (checkedId== R.id.male)
+                    answers[2]= "male";
+
+                else  if (checkedId== R.id.female)
+                    answers[2]="female";
+
+                else if (checkedId== R.id.otherGender)
+                    answers[2]="Other";
+            }
+        });
+
+
+        user_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {     // data 3
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
@@ -56,18 +81,18 @@ public class BuildProfile extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), ""+item.getTitle(), Toast.LENGTH_SHORT).show();
 
                             RadioButton apartment = (RadioButton) findViewById(R.id.roommate);
-                            apartment.setText("Looking for Apartment: "+item.getTitle());
+                            apartment.setText("Looking for Roommate for: "+item.getTitle());
 
                             if(item.getTitle().equals("Arbor Oaks"))
-                                answers[0]="1.1";
+                                answers[3]="Looking for Roommate for: Arbor Oaks";
                             else if(item.getTitle().equals("Meadow Run"))
-                                answers[0]="1.2";
+                                answers[3]="Looking for Roommate for: Meadow Run";
                             else if(item.getTitle().equals("University Village"))
-                                answers[0]="1.3";
+                                answers[3]="Looking for Roommate for: University Village";
                             else if(item.getTitle().equals("Center Point"))
-                                answers[0]="1.4";
+                                answers[3]="Looking for Roommate for: Center Point";
                             else if(item.getTitle().equals("Garden Club"))
-                                answers[0]="1.5";
+                                answers[3]="Looking for Roommate for: Garden Club";
 
                             return true;
                         }
@@ -77,73 +102,74 @@ public class BuildProfile extends AppCompatActivity {
                 }
                 else if (checkedId== R.id.apartment)
                 {
-                    answers[0]="2";
+                    answers[3]="Looking for Apartment";
                 }
 
             }
         });
 
+
         Question1_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {       // data 4
 
                 if (checkedId== R.id.stem)
-                    answers[1]= "1";
+                    answers[4]= "stem";
 
                 else  if (checkedId== R.id.arts)
-                    answers[1]="2";
+                    answers[4]="arts";
 
                 else if (checkedId== R.id.business)
-                    answers[1]="3";
+                    answers[4]="business";
 
                 else  if (checkedId== R.id.others)
-                    answers[1]="4";
+                    answers[4]="others";
             }
         });
 
         Question2_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {        // data 5
 
                 if (checkedId== R.id.early_bird)
-                    answers[2]= "1";
+                    answers[5]= "Early Bird";
 
                 else  if (checkedId== R.id.night_owl)
-                    answers[2]= "2";
+                    answers[5]= "Night Owl";
 
             }
         });
 
         Question3_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {        // data 6
 
                 if (checkedId== R.id.rarely)
-                    answers[3]= "1";
+                    answers[6]= "Rarely";
 
                 else  if (checkedId== R.id.onceAWeek)
-                    answers[3]="2";
+                    answers[6]="Once A Week";
 
                 else if (checkedId== R.id.once2Weeks)
-                    answers[3]="3";
+                    answers[6]="Once every 2 weeks";
 
                 else  if (checkedId== R.id.onceAMonth)
-                    answers[3]="4";
+                    answers[6]="Once A Month";
             }
         });
 
         Question4_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {     // data 7
 
                 if (checkedId== R.id.RarelyGuests)
-                    answers[4]= "1";
+                    answers[7]= "Rarely";
 
                 else  if (checkedId== R.id.onceAWhile)
-                    answers[4]="2";
+                    answers[7]="Once or Twice a Week";
 
                 else if (checkedId== R.id.SeveralTimesWeek)
-                    answers[4]="3";
+                    answers[7]="Several Times A Week";
 
             }
         });
@@ -151,12 +177,17 @@ public class BuildProfile extends AppCompatActivity {
 
 
         Button seeAnswers = (Button) findViewById(R.id.seeAnswers);
+
         seeAnswers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                answers[5]= bio.getText().toString();
+                answers[8]= bio.getText().toString();
 
-                for(int i=0;i<=5;i++)
+                answers[0]= name.getText().toString();  // name done
+                answers[1]= ""+day+"/"+(month+1)+"/"+year; // date of birth done
+
+
+                for(int i=0;i<=8;i++)
                 Log.i("answer",answers[i]);
             }
         });
