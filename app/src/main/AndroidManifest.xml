@@ -41,7 +41,8 @@
             android:name=".ApartmentInfo"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_apartment_info"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".Listings"></activity>
     </application>
 
 </manifest>

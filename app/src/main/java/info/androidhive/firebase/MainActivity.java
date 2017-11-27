@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut, nextAct, webViewAct;
+            changeEmail, changePassword, sendEmail, remove, signOut, nextAct, webViewAct, viewListings;
 
     private EditText oldEmail, newEmail, password, newPassword;
     private TextView verifyEmailMessage;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         remove = (Button) findViewById(R.id.remove);
         signOut = (Button) findViewById(R.id.sign_out);
         webViewAct = (Button) findViewById(R.id.webViewAct);
+        viewListings= (Button) findViewById(R.id.viewListings);
 
         oldEmail = (EditText) findViewById(R.id.old_email);
         newEmail = (EditText) findViewById(R.id.new_email);
@@ -175,6 +178,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        viewListings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent listings = new Intent(getApplicationContext(),Listings.class);
+                startActivity(listings);
+
+            }
+        });
+
 
         webViewAct.setOnClickListener(new View.OnClickListener() {
             @Override

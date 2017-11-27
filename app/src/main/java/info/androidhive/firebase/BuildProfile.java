@@ -18,6 +18,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.w3c.dom.Text;
 
 public class BuildProfile extends AppCompatActivity {
@@ -30,10 +33,18 @@ public class BuildProfile extends AppCompatActivity {
     int day, month, year;
     TextView dateOfBirth;
 
+    private FirebaseAuth auth1= FirebaseAuth.getInstance();
+    Firebase reference= new Firebase("https://testingfirebase2-baa5c.firebaseio.com/");
+    //auth1 = FirebaseAuth.getInstance();
+    Firebase databaseReference = reference.child("data").child("Users").child(auth1.getCurrentUser().getUid());
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_profile);
+        //Firebase.setAndroidContext(this);
+
 
 
         name= (TextView) findViewById(R.id.name) ; // data 0 done
@@ -181,6 +192,8 @@ public class BuildProfile extends AppCompatActivity {
         seeAnswers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(getApplicationContext(),"Button clicked",Toast.LENGTH_SHORT).show();
                 answers[8]= bio.getText().toString();
 
                 answers[0]= name.getText().toString();  // name done
@@ -189,6 +202,18 @@ public class BuildProfile extends AppCompatActivity {
 
                 for(int i=0;i<=8;i++)
                 Log.i("answer",answers[i]);
+
+                databaseReference.child("Name").setValue(answers[0]);
+                databaseReference.child("Date Of Birth").setValue(answers[1]);
+                databaseReference.child("Gender").setValue(answers[2]);
+                databaseReference.child("User Type").setValue(answers[3]);
+                databaseReference.child("Major").setValue(answers[4]);
+                databaseReference.child("Sleep Preferences").setValue(answers[5]);
+                databaseReference.child("Cleaning Frequency").setValue(answers[6]);
+                databaseReference.child("Guests").setValue(answers[7]);
+                databaseReference.child("Bio").setValue(answers[8]);
+
+
             }
         });
 
