@@ -30,4 +30,8 @@
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="button">Button</string>
     <string name="buttontrial">Button</string>
+
+    <string name="title_activity_apartment_info">ApartmentInfo</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

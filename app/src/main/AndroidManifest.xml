@@ -36,7 +36,12 @@
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BuildProfile"></activity>
+        <activity android:name=".BuildProfile" />
+        <activity
+            android:name=".ApartmentInfo"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_apartment_info"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

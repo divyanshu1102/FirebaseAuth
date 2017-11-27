@@ -8,10 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -173,7 +176,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ///////////////////////////////////////////////////////////////////////////////webViewAct
+        webViewAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(),webViewAct);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(getApplicationContext(), ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+
+                        if(item.getTitle().equals("Arbor Oaks"))
+                        {
+                            Intent apartmentInfo = new Intent(getApplicationContext(),ApartmentInfo.class).putExtra("URL","https://www.uta.edu/housing/housing/apartments/arbor-oaks.php");
+                            startActivity(apartmentInfo);
+                        }
+
+                        else if(item.getTitle().equals("Meadow Run"))
+                        {
+                            Intent apartmentInfo = new Intent(getApplicationContext(),ApartmentInfo.class).putExtra("URL","https://www.uta.edu/housing/housing/apartments/meadow-run.php");
+                            startActivity(apartmentInfo);
+                        }
+                        else if(item.getTitle().equals("University Village"))
+                        {
+                            Intent apartmentInfo = new Intent(getApplicationContext(),ApartmentInfo.class).putExtra("URL","https://www.uta.edu/housing/housing/apartments/university-village.php");
+                            startActivity(apartmentInfo);
+                        }
+                        else if(item.getTitle().equals("Center Point"))
+                        {
+                            Intent apartmentInfo = new Intent(getApplicationContext(),ApartmentInfo.class).putExtra("URL","https://www.uta.edu/housing/housing/apartments/center-point.php");
+                            startActivity(apartmentInfo);
+                        }
+                        else if(item.getTitle().equals("Garden Club"))
+                        {
+                            Intent apartmentInfo = new Intent(getApplicationContext(),ApartmentInfo.class).putExtra("URL","https://www.uta.edu/housing/housing/apartments/garden-club.php");
+                            startActivity(apartmentInfo);
+                        }
+
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
+
+                //Intent apartmentInfo = new Intent(getApplicationContext(),ApartmentInfo.class);
+                //startActivity(apartmentInfo);
+            }
+        });
 
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
@@ -263,8 +314,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //444444444444444444444444444444444444444444444444444444444444444444
 
 
         btnSendResetEmail.setOnClickListener(new View.OnClickListener() {
