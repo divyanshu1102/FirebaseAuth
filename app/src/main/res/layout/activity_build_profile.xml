@@ -501,7 +501,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
                 android:background="@color/colorAccent"
-                android:text="seeAnswers"
+                android:text="Submit"
                 android:textColor="@android:color/black" />
             </TableRow>
 

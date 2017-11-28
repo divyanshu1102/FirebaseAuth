@@ -1,6 +1,7 @@
 package info.androidhive.firebase;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,13 @@ public class Listings extends AppCompatActivity {
     private ArrayList<String> details=new ArrayList<String>();
     private ArrayList<String> images=new ArrayList<String>();
 
+
+
+    public void goToCommunication(View view)
+    {
+        Intent intent = new Intent(this, Communication.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,19 +212,8 @@ public class Listings extends AppCompatActivity {
                                        });
 
 
-                adapter = new RecyclerAdapter(titles, details, images);
+        adapter = new RecyclerAdapter(titles, details, images);
         recyclerView.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -236,6 +233,7 @@ public class Listings extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 

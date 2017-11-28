@@ -19,4 +19,6 @@
     <color name="btn_logut_bg">#ff6861</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="uta_blue">#0047b6</color>
+    <color name="uta_orange">#f58026</color>
 </resources>

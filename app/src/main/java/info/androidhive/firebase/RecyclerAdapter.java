@@ -1,5 +1,6 @@
 package info.androidhive.firebase;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -71,6 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
+                    //Listings.goToCommunication();
                 }
             });
         }
