@@ -199,6 +199,7 @@ public class BuildProfile extends AppCompatActivity {
                 answers[0]= name.getText().toString();  // name done
                 answers[1]= ""+day+"/"+(month+1)+"/"+year; // date of birth done
 
+                User user = new User(answers[0],answers[1],answers[2],answers[3],answers[4],answers[5],answers[6],answers[7],answers[8]);
 
                 for(int i=0;i<=8;i++)
                 Log.i("answer",answers[i]);
@@ -206,7 +207,7 @@ public class BuildProfile extends AppCompatActivity {
                 databaseReference.child("Name").setValue(answers[0]);
                 databaseReference.child("Date Of Birth").setValue(answers[1]);
                 databaseReference.child("Gender").setValue(answers[2]);
-                databaseReference.child("User Type").setValue(answers[3]);
+                databaseReference.child("info.androidhive.firebase.User Type").setValue(answers[3]);
                 databaseReference.child("Major").setValue(answers[4]);
                 databaseReference.child("Sleep Preferences").setValue(answers[5]);
                 databaseReference.child("Cleaning Frequency").setValue(answers[6]);

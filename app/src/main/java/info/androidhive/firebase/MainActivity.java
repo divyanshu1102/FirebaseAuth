@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         Button verifyEmail= (Button) findViewById(R.id.verifyEmail);
 
         if (user.isEmailVerified()==false) {
-            //Toast.makeText(MainActivity.this, "Unverified User", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Unverified info.androidhive.firebase.User", Toast.LENGTH_SHORT).show();
 
            // when a new user signs up.. a verification email must be sent to them and they should be logged out.
             // if they login without verifying...

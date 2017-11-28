@@ -105,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task)
                             {
-                                    Toast.makeText(SignupActivity.this, "New User Created:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignupActivity.this, "New info.androidhive.firebase.User Created:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
 
                                     // insert code to generate a verification email
 

@@ -31,7 +31,7 @@
                     android:layout_height="match_parent"
                     android:text="Help Us Help You!"
                     android:textAlignment="center"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -59,8 +59,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:focusable="false"
+                    android:focusable="true"
                     android:hint="Date of Birth"
+                    android:padding="2dp"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/phoneNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:hint="Phone Number"
                     android:padding="2dp"
                     android:textSize="20sp" />
             </TableRow>
