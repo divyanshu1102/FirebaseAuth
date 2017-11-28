@@ -1,14 +1,16 @@
 package info.androidhive.firebase;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Divyanshu Sharma on 11/27/2017.
  */
 
 public class User {
 
-    private String name, date_of_birth, gender, user_type, major, sleep_Preferences,cleaning_Frequency, guests, bio;
+    private String name, date_of_birth, gender, user_type, major, sleep_Preferences,cleaning_Frequency, guests, bio, phone_Number;
 
-    public User(String name, String date_of_birth, String gender, String user_type, String major, String sleep_Preferences, String cleaning_Frequency, String guests, String bio) {
+    public User(String name, String date_of_birth, String gender, String user_type, String major, String sleep_Preferences, String cleaning_Frequency, String guests, String bio, String phone_Number) {
         this.name = name;
         this.date_of_birth = date_of_birth;
         this.gender = gender;
@@ -18,7 +20,14 @@ public class User {
         this.cleaning_Frequency = cleaning_Frequency;
         this.guests = guests;
         this.bio = bio;
+        this.phone_Number= phone_Number;
     }
+
+    public User( ) {
+
+
+    }
+
 
     public String getDate_of_birth() {
         return date_of_birth;
@@ -48,6 +57,12 @@ public class User {
         return major;
     }
 
+    public String getphone_Number() {
+        return phone_Number;
+    }
+
+
+
     public void setMajor(String major) {
         this.major = major;
     }
@@ -71,6 +86,12 @@ public class User {
     public String getGuests() {
         return guests;
     }
+
+    public void setphone_Number(String phone_Number) {
+
+        this.phone_Number= phone_Number;
+    }
+
 
     public void setGuests(String guests) {
         this.guests = guests;

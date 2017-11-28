@@ -26,9 +26,9 @@ import org.w3c.dom.Text;
 public class BuildProfile extends AppCompatActivity {
 
     private  RadioGroup user_type, Question0_group, Question1_group, Question2_group, Question3_group, Question4_group;
-    private String[] answers={"-99","-99","-99","-99","-99","-99","-99","-99","-99"};
+    private String[] answers={"-99","-99","-99","-99","-99","-99","-99","-99","-99","-99"};
     private MultiAutoCompleteTextView bio;
-    private TextView name, dateofBirth;
+    private TextView name, dateofBirth,phoneNumber;
 
     int day, month, year;
     TextView dateOfBirth;
@@ -49,6 +49,7 @@ public class BuildProfile extends AppCompatActivity {
 
         name= (TextView) findViewById(R.id.name) ; // data 0 done
         dateofBirth= (TextView) findViewById(R.id.dateOfBirth) ; // data 1 done
+        phoneNumber= (TextView) findViewById(R.id.phoneNumber) ; //data 9
 
         user_type= (RadioGroup) findViewById(R.id.radioGroup);
         Question0_group= (RadioGroup) findViewById(R.id.Question0_group);
@@ -195,25 +196,28 @@ public class BuildProfile extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(),"Button clicked",Toast.LENGTH_SHORT).show();
                 answers[8]= bio.getText().toString();
+                answers[9]= phoneNumber.getText().toString();
 
                 answers[0]= name.getText().toString();  // name done
                 answers[1]= ""+day+"/"+(month+1)+"/"+year; // date of birth done
 
-                User user = new User(answers[0],answers[1],answers[2],answers[3],answers[4],answers[5],answers[6],answers[7],answers[8]);
+                User user = new User(answers[0],answers[1],answers[2],answers[3],answers[4],answers[5],answers[6],answers[7],answers[8],answers[9]);
 
-                for(int i=0;i<=8;i++)
+                for(int i=0;i<=9;i++)
                 Log.i("answer",answers[i]);
 
-                databaseReference.child("Name").setValue(answers[0]);
-                databaseReference.child("Date Of Birth").setValue(answers[1]);
-                databaseReference.child("Gender").setValue(answers[2]);
-                databaseReference.child("info.androidhive.firebase.User Type").setValue(answers[3]);
-                databaseReference.child("Major").setValue(answers[4]);
-                databaseReference.child("Sleep Preferences").setValue(answers[5]);
-                databaseReference.child("Cleaning Frequency").setValue(answers[6]);
-                databaseReference.child("Guests").setValue(answers[7]);
-                databaseReference.child("Bio").setValue(answers[8]);
+                // name, date_of_birth, gender, user_type, major, sleep_Preferences,cleaning_Frequency, guests, bio, phone_Number
 
+                databaseReference.child("name").setValue(user.getName());
+                databaseReference.child("date_of_birth").setValue(user.getDate_of_birth());
+                databaseReference.child("gender").setValue(user.getGender());
+                databaseReference.child("user_type").setValue(user.getUser_type());
+                databaseReference.child("major").setValue(user.getMajor());
+                databaseReference.child("sleep_Preferences").setValue(user.getSleep_Preferences());
+                databaseReference.child("cleaning_Frequency").setValue(user.getCleaning_Frequency());
+                databaseReference.child("guests").setValue(user.getGuests());
+                databaseReference.child("bio").setValue(user.getBio());
+                databaseReference.child("phone_number").setValue(user.getphone_Number());
 
             }
         });

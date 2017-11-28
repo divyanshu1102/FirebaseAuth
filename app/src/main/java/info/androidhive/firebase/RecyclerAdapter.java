@@ -9,13 +9,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Divyanshu Sharma on 11/26/2017.
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
+    private ArrayList<String> titles=new ArrayList<String>();
+    private ArrayList<String> details=new ArrayList<String>();
+    private ArrayList<String> images=new ArrayList<String>();
 
+    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images) {
+        this.titles = titles;
+        this.details = details;
+        this.images = images;
+    }
+
+    /*
     private String[] titles = {"Chapter One",
             "Chapter Two",
             "Chapter Three",
@@ -36,7 +48,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             "Item four details", "Item file details",
             "Item six details", "Item seven details",
             "Item eight details"};
-
+    */
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -74,13 +86,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.itemTitle.setText(titles[i]);
-        viewHolder.itemDetail.setText(details[i]);
-        viewHolder.itemImage.setText(images[i]);
+        viewHolder.itemTitle.setText(titles.get(i));// viewHolder.itemTitle.setText(titles[i]);
+        viewHolder.itemDetail.setText(details.get(i));
+        viewHolder.itemImage.setText(images.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return titles.size();
     }
 }
