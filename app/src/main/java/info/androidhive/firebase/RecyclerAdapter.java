@@ -1,6 +1,8 @@
 package info.androidhive.firebase;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +23,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<String> titles=new ArrayList<String>();
     private ArrayList<String> details=new ArrayList<String>();
     private ArrayList<String> images=new ArrayList<String>();
+    private Context context;
 
-    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images) {
+
+    public RecyclerAdapter(Context context) {
+        this.context = context;
+    }
+
+
+    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images,Context context) {
         this.titles = titles;
         this.details = details;
         this.images = images;
@@ -72,7 +81,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
-                    //Listings.goToCommunication();
+
+                    //Intent myIntent = new Intent(context, Communication.class);
+                    //v.getContext().startActivity(myIntent);
+                    //Intent myIntent = new Intent(context, Communication.class);
+                    //context.startActivities(myIntent);
                 }
             });
         }
@@ -86,15 +99,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return viewHolder;
     }
 
+
+
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
+
         viewHolder.itemTitle.setText(titles.get(i));// viewHolder.itemTitle.setText(titles[i]);
         viewHolder.itemDetail.setText(details.get(i));
         viewHolder.itemImage.setText(images.get(i));
+
     }
+
+
 
     @Override
     public int getItemCount() {
         return titles.size();
     }
+
+
+
+
+
+
 }

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -61,92 +62,6 @@ public class Listings extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-
-        /*
-        adapter = new RecyclerAdapter();
-        recyclerView.setAdapter(adapter);
-         */
-
-        ////////////////////////////////////////////////////////////
-
-        /*q.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
-            @Override
-            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-
-                User downloadingUser =  dataSnapshot.getValue(User.class);
-
-                titles.add(downloadingUser.getUser_type());
-                Log.i("DownLoad",""+downloadingUser.getUser_type());
-                details.add(downloadingUser.getMajor());
-                Log.i("DownLoad",""+downloadingUser.getMajor());
-                images.add(downloadingUser.getName());
-                Log.i("DownLoad",""+downloadingUser.getName());
-
-
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/ // sorta works
-
-
-        // following works
-
-        /*q.addChildEventListener(new com.google.firebase.database.ChildEventListener() {
-            @Override
-            public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-                User downloadingUser=  dataSnapshot.getValue(User.class);
-
-                    titles.add(downloadingUser.getUser_type());
-                    Log.i("DownLoad", "" + downloadingUser.getUser_type());
-                    details.add(downloadingUser.getMajor());
-                    Log.i("DownLoad", "" + downloadingUser.getMajor());
-                    images.add(downloadingUser.getName());
-                    Log.i("DownLoad", "" + downloadingUser.getName());
-
-                    adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-                User downloadingUser =  dataSnapshot.getValue(User.class);
-
-                titles.add(downloadingUser.getUser_type());
-                Log.i("DownLoad",""+downloadingUser.getUser_type());
-                details.add(downloadingUser.getMajor());
-                Log.i("DownLoad",""+downloadingUser.getMajor());
-                images.add(downloadingUser.getName());
-                Log.i("DownLoad",""+downloadingUser.getName());
-
-
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
 
 
         usersRef.addChildEventListener(new com.google.firebase.database.ChildEventListener() {
@@ -212,7 +127,7 @@ public class Listings extends AppCompatActivity {
                                        });
 
 
-        adapter = new RecyclerAdapter(titles, details, images);
+        adapter = new RecyclerAdapter(titles, details, images,this);
         recyclerView.setAdapter(adapter);
 
     }
@@ -233,7 +148,7 @@ public class Listings extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
+            //Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show();
             return true;
         }
 
