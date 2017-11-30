@@ -3,6 +3,7 @@ package info.androidhive.firebase;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,54 +13,46 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Communication extends AppCompatActivity {
 
-    private ImageButton messagingButton;
+    private Button messagingButton;
     private String phone;
+    private TextView sex, major, lifestyle, clean, guest, bio,name;
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_communication);
 
-        messagingButton= (ImageButton)findViewById(R.id.messagingButton);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
-        Intent intent = getIntent();
-        phone = intent.getStringExtra("Phone");
 
-        //Toast.makeText(Communication.this,""+phone,Toast.LENGTH_SHORT).show();
+        messagingButton= (Button)findViewById(R.id.button_text);
 
-        messagingButton.setOnTouchListener(new View.OnTouchListener() {
+        name= (TextView)findViewById(R.id.name);
+        sex = (TextView) findViewById(R.id.sex);
+        major = (TextView) findViewById(R.id.major);
+        lifestyle = (TextView) findViewById(R.id.lifestyle);
+        clean = (TextView) findViewById(R.id.clean);
+        guest = (TextView) findViewById(R.id.guest);
+        bio = (TextView) findViewById(R.id.bio);
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+        name.setText(getIntent().getExtras().getString("Name"));
+        //Toast.makeText(this,getIntent().getExtras().getString("Name"),Toast.LENGTH_SHORT).show();
+        sex.setText(getIntent().getExtras().getString("Gender"));
+        major.setText(getIntent().getExtras().getString("Major")+" Major");
+        lifestyle.setText(getIntent().getExtras().getString("Lifestyle"));
+        clean.setText("I Clean: "+getIntent().getExtras().getString("Cleaning"));
+        guest.setText("Guests' Frequency: "+getIntent().getExtras().getString("Guest"));
+        bio.setText(getIntent().getExtras().getString("Bio"));
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageButton view = (ImageButton) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        v.startAnimation(buttonClick);
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-
-                return false;
-            }
-        });
-
+        phone = getIntent().getExtras().getString("Phone");
 
         messagingButton.setOnClickListener(new View.OnClickListener() {
             @Override

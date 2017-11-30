@@ -3,6 +3,7 @@ package info.androidhive.firebase;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +24,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<String> titles=new ArrayList<String>();
     private ArrayList<String> details=new ArrayList<String>();
     private ArrayList<String> images=new ArrayList<String>();
-    private ArrayList<String> userIDs=new ArrayList<String>();
     private ArrayList<String> phoneNumbers=new ArrayList<String>();
+    private ArrayList<String> gender=new ArrayList<String>();
+    private ArrayList<String> lifestyle=new ArrayList<String>();
+    private ArrayList<String> cleaning=new ArrayList<String>();
+    private ArrayList<String> guest=new ArrayList<String>();
+    private ArrayList<String> bio=new ArrayList<String>();
 
     private Context context;
 
@@ -34,14 +39,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 
-    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images, ArrayList<String> userIDs, ArrayList<String> phoneNumbers, Context context) {
-
-        this.context= context;
+    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images, ArrayList<String> phoneNumbers, ArrayList<String> gender, ArrayList<String> lifestyle, ArrayList<String> cleaning, ArrayList<String> guest, ArrayList<String> bio, Context context) {
         this.titles = titles;
         this.details = details;
         this.images = images;
-        this.userIDs= userIDs;
-        this.phoneNumbers= phoneNumbers;
+        this.phoneNumbers = phoneNumbers;
+        this.gender = gender;
+        this.lifestyle = lifestyle;
+        this.cleaning = cleaning;
+        this.guest = guest;
+        this.bio = bio;
+        this.context = context;
     }
 
     /*
@@ -93,7 +101,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     //Intent intent = new Intent(context,Communication.class);
                     //intent.putExtra("Phone",""+phoneNumbers.get(position));
                     //context.startActivity(intent);
-                    context.startActivity(new Intent(context, Communication.class).putExtra("Phone",""+phoneNumbers.get(position)));
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("Major", details.get(position));
+                    mBundle.putString("Name", images.get(position));
+                    mBundle.putString("Phone", phoneNumbers.get(position));
+                    mBundle.putString("Gender", gender.get(position));
+                    mBundle.putString("Lifestyle", lifestyle.get(position));
+                    mBundle.putString("Cleaning", cleaning.get(position));
+                    mBundle.putString("Bio", bio.get(position));
+                    mBundle.putString("Guest", guest.get(position));
+
+                    context.startActivity(new Intent(context, Communication.class).putExtras(mBundle));
 
                 }
             });

@@ -34,14 +34,20 @@ public class Listings extends AppCompatActivity {
     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("data").child("Users");
     Query q= usersRef.orderByKey().equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-    private ArrayList<String> titles=new ArrayList<String>();
-    private ArrayList<String> details=new ArrayList<String>();
-    private ArrayList<String> images=new ArrayList<String>();
-    private ArrayList<String> userIDs= new ArrayList<String>();
-    private ArrayList<String> phoneNumbers= new ArrayList<String>();
+    private ArrayList<String> titles=new ArrayList<String>();  //user type
+    private ArrayList<String> details=new ArrayList<String>();  //major
+    private ArrayList<String> images=new ArrayList<String>();   //name
+    private ArrayList<String> phoneNumbers= new ArrayList<String>(); //phone number
+    private ArrayList<String> gender=new ArrayList<String>();   //gender
+    private ArrayList<String> lifestyle= new ArrayList<String>(); // sleep
+    private ArrayList<String> cleaning= new ArrayList<String>(); //cleaning
+    private ArrayList<String> guest= new ArrayList<String>(); // guest
+    private ArrayList<String> bio= new ArrayList<String>(); //bio
 
-    //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    //DatabaseReference currentUserDatabase;
+    //what i need:name8, gender, major8, lifestyle, cleaning,guest, bio
+
+    private String filter_gender="", filter_major="", filter_cleaning="", filter_sleeping="",filter_guest="";
+
     String userType_listing;
 
     @Override
@@ -49,16 +55,16 @@ public class Listings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listings);
 
-        //Intent intent = getIntent();
-        //userType_listing = intent.getStringExtra("UserType");
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        ///
-        //userID=user.getUid();
-        //currentUserDatabase= FirebaseDatabase.getInstance().getReference().child("data").child("Users").child(userID);
+        filter_major= getIntent().getExtras().getString("Major");
+        filter_cleaning= getIntent().getExtras().getString("Cleaning");
+        filter_gender= getIntent().getExtras().getString("Gender");
+        filter_sleeping= getIntent().getExtras().getString("Sleeping");
+        filter_guest= getIntent().getExtras().getString("Guest");
+
 
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("data");
@@ -82,8 +88,6 @@ public class Listings extends AppCompatActivity {
         });
 
 
-        ///
-
 
         usersRef.addChildEventListener(new com.google.firebase.database.ChildEventListener() {
                @Override
@@ -91,75 +95,140 @@ public class Listings extends AppCompatActivity {
 
                    User downloadingUser =  dataSnapshot.getValue(User.class);
 
-                   if(userType_listing.equals("Looking for Apartment")) {
+                        if (userType_listing.equals("Looking for Apartment")) {
 
-                       if(!downloadingUser.getUser_type().equals("Looking for Apartment")) {
-                           titles.add(downloadingUser.getUser_type());
-                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
+                            if (!downloadingUser.getUser_type().equals("Looking for Apartment")) {
 
-                           details.add(downloadingUser.getMajor());
-                           Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                           images.add(downloadingUser.getName());
-                           Log.i("DownLoad", "" + downloadingUser.getName());
+                                titles.add(downloadingUser.getUser_type());
+                                Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                           phoneNumbers.add(downloadingUser.getPhone_number());
-                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+                                details.add(downloadingUser.getMajor());
+                                Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                           userIDs.add(downloadingUser.getUserId());
-                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+                                images.add(downloadingUser.getName());
+                                Log.i("DownLoad", "" + downloadingUser.getName());
 
-                       }
-                   }
-                   else if(!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("") )
-                   {
-                       if(downloadingUser.getUser_type().equals("Looking for Apartment")) {
-                           titles.add(downloadingUser.getUser_type());
-                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
+                                phoneNumbers.add(downloadingUser.getPhone_number());
+                                Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                           details.add(downloadingUser.getMajor());
-                           Log.i("DownLoad", "" + downloadingUser.getMajor());
+                                ////////////////////////////////////////////////////////////////
 
-                           images.add(downloadingUser.getName());
-                           Log.i("DownLoad", "" + downloadingUser.getName());
+                                gender.add(downloadingUser.getGender());
+                                lifestyle.add(downloadingUser.getSleep_Preferences());
+                                cleaning.add(downloadingUser.getCleaning_Frequency());
+                                guest.add(downloadingUser.getGuests());
+                                bio.add(downloadingUser.getBio());
 
-                           phoneNumbers.add(downloadingUser.getPhone_number());
-                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                           userIDs.add(downloadingUser.getUserId());
-                           Log.i("DownLoad", "" + downloadingUser.getUserId());
-                       }
-                   }
-                   else
-                   {
-                       titles.add(downloadingUser.getUser_type());
-                       Log.i("DownLoad", "" + downloadingUser.getUser_type());
+                                //userIDs.add(downloadingUser.getUserId());
+                                //Log.i("DownLoad", "" + downloadingUser.getUserId());
 
-                       details.add(downloadingUser.getMajor());
-                       Log.i("DownLoad", "" + downloadingUser.getMajor());
+                            }
+                        } else if (!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
+                            if (downloadingUser.getUser_type().equals("Looking for Apartment")) {
 
-                       images.add(downloadingUser.getName());
-                       Log.i("DownLoad", "" + downloadingUser.getName());
+                                titles.add(downloadingUser.getUser_type());
+                                Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                       phoneNumbers.add(downloadingUser.getPhone_number());
-                       Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+                                details.add(downloadingUser.getMajor());
+                                Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                       userIDs.add(downloadingUser.getUserId());
-                       Log.i("DownLoad", "" + downloadingUser.getUserId());
+                                images.add(downloadingUser.getName());
+                                Log.i("DownLoad", "" + downloadingUser.getName());
 
-                   }
+                                phoneNumbers.add(downloadingUser.getPhone_number());
+                                Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                                //userIDs.add(downloadingUser.getUserId());
+                                //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                                gender.add(downloadingUser.getGender());
+                                lifestyle.add(downloadingUser.getSleep_Preferences());
+                                cleaning.add(downloadingUser.getCleaning_Frequency());
+                                guest.add(downloadingUser.getGuests());
+                                bio.add(downloadingUser.getBio());
+                            }
+                        } else {
+                            titles.add(downloadingUser.getUser_type());
+                            Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                            details.add(downloadingUser.getMajor());
+                            Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                            images.add(downloadingUser.getName());
+                            Log.i("DownLoad", "" + downloadingUser.getName());
+
+                            phoneNumbers.add(downloadingUser.getPhone_number());
+                            Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                            //userIDs.add(downloadingUser.getUserId());
+                            //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                            gender.add(downloadingUser.getGender());
+                            lifestyle.add(downloadingUser.getSleep_Preferences());
+                            cleaning.add(downloadingUser.getCleaning_Frequency());
+                            guest.add(downloadingUser.getGuests());
+                            bio.add(downloadingUser.getBio());
+
+                        }
 
                    adapter.notifyDataSetChanged();
                }
 
                @Override
-               public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+               public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s)
+                   {
 
-                   User downloadingUser =  dataSnapshot.getValue(User.class);
+                       User downloadingUser = dataSnapshot.getValue(User.class);
+                        /*if ((downloadingUser.getUser_type().equals("Looking for Apartment") && ( filter_major.equals(downloadingUser.getMajor()) && filter_cleaning.equals(downloadingUser.getCleaning_Frequency()) && filter_gender.equals(downloadingUser.getGender()) && filter_guest.equals(downloadingUser.getGuests()) && filter_sleeping.equals(downloadingUser.getSleep_Preferences())) )
+                                )
+                        {*/
+                       if (userType_listing.equals("Looking for Apartment")) {
 
-                   if(userType_listing.equals("Looking for Apartment")) {
+                           if (!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                               titles.add(downloadingUser.getUser_type());
+                               Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                       if(!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                               details.add(downloadingUser.getMajor());
+                               Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                               images.add(downloadingUser.getName());
+                               Log.i("DownLoad", "" + downloadingUser.getName());
+
+                               phoneNumbers.add(downloadingUser.getPhone_number());
+                               Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                               //userIDs.add(downloadingUser.getUserId());
+                               //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                               gender.add(downloadingUser.getGender());
+                               lifestyle.add(downloadingUser.getSleep_Preferences());
+                               cleaning.add(downloadingUser.getCleaning_Frequency());
+                               guest.add(downloadingUser.getGuests());
+                               bio.add(downloadingUser.getBio());
+
+                           }
+                       } else if (!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
+                           if (downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                               titles.add(downloadingUser.getUser_type());
+                               Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                               details.add(downloadingUser.getMajor());
+                               Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                               images.add(downloadingUser.getName());
+                               Log.i("DownLoad", "" + downloadingUser.getName());
+
+                               phoneNumbers.add(downloadingUser.getPhone_number());
+                               Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                               //userIDs.add(downloadingUser.getUserId());
+                               //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                               gender.add(downloadingUser.getGender());
+                               lifestyle.add(downloadingUser.getSleep_Preferences());
+                               cleaning.add(downloadingUser.getCleaning_Frequency());
+                               guest.add(downloadingUser.getGuests());
+                               bio.add(downloadingUser.getBio());
+                           }
+                       } else {
                            titles.add(downloadingUser.getUser_type());
                            Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
@@ -172,49 +241,16 @@ public class Listings extends AppCompatActivity {
                            phoneNumbers.add(downloadingUser.getPhone_number());
                            Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                           userIDs.add(downloadingUser.getUserId());
-                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+                           //userIDs.add(downloadingUser.getUserId());
+                           //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                           gender.add(downloadingUser.getGender());
+                           lifestyle.add(downloadingUser.getSleep_Preferences());
+                           cleaning.add(downloadingUser.getCleaning_Frequency());
+                           guest.add(downloadingUser.getGuests());
+                           bio.add(downloadingUser.getBio());
 
                        }
-                   }
-                   else  if(!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("") )
-                   {
-                       if(downloadingUser.getUser_type().equals("Looking for Apartment")) {
-                           titles.add(downloadingUser.getUser_type());
-                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
-
-                           details.add(downloadingUser.getMajor());
-                           Log.i("DownLoad", "" + downloadingUser.getMajor());
-
-                           images.add(downloadingUser.getName());
-                           Log.i("DownLoad", "" + downloadingUser.getName());
-
-                           phoneNumbers.add(downloadingUser.getPhone_number());
-                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
-
-                           userIDs.add(downloadingUser.getUserId());
-                           Log.i("DownLoad", "" + downloadingUser.getUserId());
-                       }
-                   }
-                   else
-                   {
-                       titles.add(downloadingUser.getUser_type());
-                       Log.i("DownLoad", "" + downloadingUser.getUser_type());
-
-                       details.add(downloadingUser.getMajor());
-                       Log.i("DownLoad", "" + downloadingUser.getMajor());
-
-                       images.add(downloadingUser.getName());
-                       Log.i("DownLoad", "" + downloadingUser.getName());
-
-                       phoneNumbers.add(downloadingUser.getPhone_number());
-                       Log.i("DownLoad", "" + downloadingUser.getPhone_number());
-
-                       userIDs.add(downloadingUser.getUserId());
-                       Log.i("DownLoad", "" + downloadingUser.getUserId());
-
-                   }
-
+                   //}
                    adapter.notifyDataSetChanged();
 
                }
@@ -229,9 +265,55 @@ public class Listings extends AppCompatActivity {
 
                    User downloadingUser =  dataSnapshot.getValue(User.class);
 
-                   if(userType_listing.equals("Looking for Apartment")) {
+                   /*if((downloadingUser.getUser_type().equals("Looking for Apartment") && ( filter_major.equals(downloadingUser.getMajor()) && filter_cleaning.equals(downloadingUser.getCleaning_Frequency()) && filter_gender.equals(downloadingUser.getGender()) && filter_guest.equals(downloadingUser.getGuests()) && filter_sleeping.equals(downloadingUser.getSleep_Preferences())) )
+                           ) {*/
+                       if (userType_listing.equals("Looking for Apartment")) {
 
-                       if(!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           if (!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                               titles.add(downloadingUser.getUser_type());
+                               Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                               details.add(downloadingUser.getMajor());
+                               Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                               images.add(downloadingUser.getName());
+                               Log.i("DownLoad", "" + downloadingUser.getName());
+
+                               phoneNumbers.add(downloadingUser.getPhone_number());
+                               Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                               //userIDs.add(downloadingUser.getUserId());
+                               //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                               gender.add(downloadingUser.getGender());
+                               lifestyle.add(downloadingUser.getSleep_Preferences());
+                               cleaning.add(downloadingUser.getCleaning_Frequency());
+                               guest.add(downloadingUser.getGuests());
+                               bio.add(downloadingUser.getBio());
+
+                           }
+                       } else if (!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
+                           if (downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                               titles.add(downloadingUser.getUser_type());
+                               Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                               details.add(downloadingUser.getMajor());
+                               Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                               images.add(downloadingUser.getName());
+                               Log.i("DownLoad", "" + downloadingUser.getName());
+
+                               phoneNumbers.add(downloadingUser.getPhone_number());
+                               Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                               //userIDs.add(downloadingUser.getUserId());
+                               //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                               gender.add(downloadingUser.getGender());
+                               lifestyle.add(downloadingUser.getSleep_Preferences());
+                               cleaning.add(downloadingUser.getCleaning_Frequency());
+                               guest.add(downloadingUser.getGuests());
+                               bio.add(downloadingUser.getBio());
+                           }
+                       } else {
                            titles.add(downloadingUser.getUser_type());
                            Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
@@ -244,49 +326,16 @@ public class Listings extends AppCompatActivity {
                            phoneNumbers.add(downloadingUser.getPhone_number());
                            Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                           userIDs.add(downloadingUser.getUserId());
-                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+                           //userIDs.add(downloadingUser.getUserId());
+                           //Log.i("DownLoad", "" + downloadingUser.getUserId());
+                           gender.add(downloadingUser.getGender());
+                           lifestyle.add(downloadingUser.getSleep_Preferences());
+                           cleaning.add(downloadingUser.getCleaning_Frequency());
+                           guest.add(downloadingUser.getGuests());
+                           bio.add(downloadingUser.getBio());
 
                        }
-                   }
-                   else  if(!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("") )
-                   {
-                       if(downloadingUser.getUser_type().equals("Looking for Apartment")) {
-                           titles.add(downloadingUser.getUser_type());
-                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
-
-                           details.add(downloadingUser.getMajor());
-                           Log.i("DownLoad", "" + downloadingUser.getMajor());
-
-                           images.add(downloadingUser.getName());
-                           Log.i("DownLoad", "" + downloadingUser.getName());
-
-                           phoneNumbers.add(downloadingUser.getPhone_number());
-                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
-
-                           userIDs.add(downloadingUser.getUserId());
-                           Log.i("DownLoad", "" + downloadingUser.getUserId());
-                       }
-                   }
-                   else
-                   {
-                       titles.add(downloadingUser.getUser_type());
-                       Log.i("DownLoad", "" + downloadingUser.getUser_type());
-
-                       details.add(downloadingUser.getMajor());
-                       Log.i("DownLoad", "" + downloadingUser.getMajor());
-
-                       images.add(downloadingUser.getName());
-                       Log.i("DownLoad", "" + downloadingUser.getName());
-
-                       phoneNumbers.add(downloadingUser.getPhone_number());
-                       Log.i("DownLoad", "" + downloadingUser.getPhone_number());
-
-                       userIDs.add(downloadingUser.getUserId());
-                       Log.i("DownLoad", "" + downloadingUser.getUserId());
-
-                   }
-
+                   //}
                    adapter.notifyDataSetChanged();
 
                }
@@ -298,7 +347,7 @@ public class Listings extends AppCompatActivity {
            });
 
 
-        adapter = new RecyclerAdapter(titles, details, images, userIDs, phoneNumbers, Listings.this);
+        adapter = new RecyclerAdapter(titles, details, images, phoneNumbers, gender, lifestyle, cleaning, guest, bio, Listings.this);
         recyclerView.setAdapter(adapter);
 
     }
@@ -319,7 +368,10 @@ public class Listings extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            //Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"Settings option",Toast.LENGTH_SHORT).show();
+            Intent intent= new Intent(getApplicationContext(),Filters.class);
+            startActivity(intent);
+
             return true;
         }
 
@@ -330,6 +382,4 @@ public class Listings extends AppCompatActivity {
      * Created by Divyanshu Sharma on 11/29/2017.
      */
 
-    public static class GlobalVariables {
-    }
 }
