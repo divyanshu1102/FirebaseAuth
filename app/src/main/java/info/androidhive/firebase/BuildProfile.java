@@ -31,6 +31,8 @@ import org.w3c.dom.Text;
 
 public class BuildProfile extends AppCompatActivity {
 
+    public static String userType="";
+
     private  RadioGroup user_type, Question0_group, Question1_group, Question2_group, Question3_group, Question4_group;
     private String[] answers={"-99","-99","-99","-99","-99","-99","-99","-99","-99","-99"};
     private MultiAutoCompleteTextView bio;
@@ -80,10 +82,10 @@ public class BuildProfile extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {    // data 2
 
                 if (checkedId== R.id.male)
-                    answers[2]= "male";
+                    answers[2]= "Male";
 
                 else  if (checkedId== R.id.female)
-                    answers[2]="female";
+                    answers[2]="Female";
 
                 else if (checkedId== R.id.otherGender)
                     answers[2]="Other";
@@ -110,15 +112,15 @@ public class BuildProfile extends AppCompatActivity {
                             apartment.setText("Looking for Roommate for: "+item.getTitle());
 
                             if(item.getTitle().equals("Arbor Oaks"))
-                                answers[3]="Looking for Roommate for: Arbor Oaks";
+                                answers[3]="Arbor Oaks";
                             else if(item.getTitle().equals("Meadow Run"))
-                                answers[3]="Looking for Roommate for: Meadow Run";
+                                answers[3]="Meadow Run";
                             else if(item.getTitle().equals("University Village"))
-                                answers[3]="Looking for Roommate for: University Village";
+                                answers[3]="University Village";
                             else if(item.getTitle().equals("Center Point"))
-                                answers[3]="Looking for Roommate for: Center Point";
+                                answers[3]="Center Point";
                             else if(item.getTitle().equals("Garden Club"))
-                                answers[3]="Looking for Roommate for: Garden Club";
+                                answers[3]="Garden Club";
 
                             return true;
                         }
@@ -140,16 +142,16 @@ public class BuildProfile extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {       // data 4
 
                 if (checkedId== R.id.stem)
-                    answers[4]= "stem";
+                    answers[4]= "STEM";
 
                 else  if (checkedId== R.id.arts)
-                    answers[4]="arts";
+                    answers[4]="Arts";
 
                 else if (checkedId== R.id.business)
-                    answers[4]="business";
+                    answers[4]="Business";
 
                 else  if (checkedId== R.id.others)
-                    answers[4]="others";
+                    answers[4]="Others";
             }
         });
 
@@ -201,9 +203,6 @@ public class BuildProfile extends AppCompatActivity {
         });
 
 
-
-
-
         seeAnswers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,6 +248,10 @@ public class BuildProfile extends AppCompatActivity {
                     databaseReference.child("bio").setValue(user.getBio());
                     databaseReference.child("phone_number").setValue(user.getPhone_number());
 
+                    // return to main activity
+                    userType=user.getUser_type();
+                    Intent mainActivityIntent = new Intent(BuildProfile.this, MainActivity.class);
+                    startActivity(mainActivityIntent);
                 }
 
             }

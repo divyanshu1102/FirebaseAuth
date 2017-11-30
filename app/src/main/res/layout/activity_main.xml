@@ -84,8 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:text="Edit Profile"
+            android:drawableLeft="@drawable/edit_icon"
+            android:drawablePadding="6sp"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -95,10 +97,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/btn_logut_bg"
+            android:background="@color/colorPrimaryDark"
             android:text="LISTINGS"
+            android:drawableLeft="@drawable/listing_icon"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
+
 
         <Button
             android:id="@+id/webViewAct"
@@ -106,8 +110,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/btn_logut_bg"
+            android:background="@color/colorPrimaryDark"
             android:text="APARTMENTS"
+            android:drawableLeft="@drawable/apt_icon"
+            android:drawablePadding="6sp"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -133,16 +139,6 @@
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/send"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
-            android:text="@string/btn_send"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -160,6 +156,7 @@
             android:text="@string/btn_remove"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
+////////////////
 
         <Button
             android:id="@+id/change_email_button"
@@ -183,19 +180,30 @@
             android:id="@+id/sending_pass_reset_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:hint="Re-enter Email"
             android:text="@string/send_password_reset_email"
+            android:drawableLeft="@drawable/reset_icon"
+            android:drawablePadding="6sp"
             android:textStyle="bold" />
 
+
         <Button
-            android:id="@+id/remove_user_button"
+            android:id="@+id/send"
             style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/remove_user"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/btn_send"
+            android:hint="Verify"
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
+
+
 
         <Button
             android:id="@+id/sign_out"
@@ -203,11 +211,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
             android:text="@string/btn_sign_out"
+            android:drawableLeft="@drawable/signout_icon"
+            android:drawablePadding="6sp"
             android:textColor="@android:color/white"
+            android:background="@color/lbl_name"
             android:textStyle="bold" />
 
+        <Button
+            android:id="@+id/remove_user_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/remove_user"
+            android:drawableLeft="@drawable/delete_icon"
+            android:drawablePadding="6sp"
+            android:background="@color/btn_logut_bg"
+            android:textStyle="bold" />
 
 
         <Button
@@ -216,7 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/btn_logut_bg"
+            android:background="@color/colorPrimary"
             android:text="Resend Verification Email"
             android:textColor="@android:color/white"
             android:textStyle="bold" />

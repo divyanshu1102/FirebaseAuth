@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
-    String email;
+    String email, userType;
     int removeAttempts=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,12 +179,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        userType= BuildProfile.userType;
 
         viewListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent listings = new Intent(getApplicationContext(),Listings.class);
+                Intent listings = new Intent(getApplicationContext(),Listings.class).putExtra("UserType",userType);
                 startActivity(listings);
 
             }
@@ -343,6 +344,15 @@ public class MainActivity extends AppCompatActivity {
                 sendEmail.setVisibility(View.VISIBLE);
                 remove.setVisibility(View.GONE);
 
+                /*
+                Make edit profile, listings and apartments go away
+                */
+                viewListings.setVisibility(View.GONE); // listing
+                webViewAct.setVisibility(View.GONE);  // apartments
+                nextAct.setVisibility(View.GONE);
+
+
+
                 if (user != null) {
                     email = user.getEmail();
                 }
@@ -354,6 +364,8 @@ public class MainActivity extends AppCompatActivity {
         sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                btnSendResetEmail.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 if (oldEmail.getText().toString().trim().equals(email)) {
                     auth.sendPasswordResetEmail(oldEmail.getText().toString().trim())
@@ -363,6 +375,9 @@ public class MainActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(MainActivity.this, "Reset password email is sent!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
+                                        auth.signOut();
+
+
                                     } else {
                                         Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);

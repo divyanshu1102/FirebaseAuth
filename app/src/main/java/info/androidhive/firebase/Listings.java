@@ -1,9 +1,6 @@
 package info.androidhive.firebase;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,20 +9,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -46,105 +40,262 @@ public class Listings extends AppCompatActivity {
     private ArrayList<String> userIDs= new ArrayList<String>();
     private ArrayList<String> phoneNumbers= new ArrayList<String>();
 
-
-
-    public void goToCommunication(View view)
-    {
-        Intent intent = new Intent(this, Communication.class);
-        startActivity(intent);
-    }
+    //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    //DatabaseReference currentUserDatabase;
+    String userType_listing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listings);
 
-        recyclerView =
-                (RecyclerView) findViewById(R.id.recycler_view);
+        //Intent intent = getIntent();
+        //userType_listing = intent.getStringExtra("UserType");
 
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        ///
+        //userID=user.getUid();
+        //currentUserDatabase= FirebaseDatabase.getInstance().getReference().child("data").child("Users").child(userID);
+
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("data");
+        mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                       User currentUser= dataSnapshot.getValue(User.class);
+                    //Toast.makeText(Listings.this,"User name: "+currentUser.getName()+" "+currentUser.getUser_type(),Toast.LENGTH_SHORT).show();
+                    userType_listing=currentUser.getUser_type().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                userType_listing="";
+                Toast.makeText(Listings.this,"Firebase Error Occured",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        ///
+
 
         usersRef.addChildEventListener(new com.google.firebase.database.ChildEventListener() {
-                                           @Override
-                                           public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+               @Override
+               public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
 
-                                               User downloadingUser =  dataSnapshot.getValue(User.class);
+                   User downloadingUser =  dataSnapshot.getValue(User.class);
 
-                                               titles.add(downloadingUser.getUser_type());
-                                               Log.i("DownLoad",""+downloadingUser.getUser_type());
+                   if(userType_listing.equals("Looking for Apartment")) {
 
-                                               details.add(downloadingUser.getMajor());
-                                               Log.i("DownLoad",""+downloadingUser.getMajor());
+                       if(!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           titles.add(downloadingUser.getUser_type());
+                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                                               images.add(downloadingUser.getName());
-                                               Log.i("DownLoad",""+downloadingUser.getName());
+                           details.add(downloadingUser.getMajor());
+                           Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                                               phoneNumbers.add(downloadingUser.getPhone_number());
-                                               Log.i("DownLoad",""+downloadingUser.getPhone_number());
+                           images.add(downloadingUser.getName());
+                           Log.i("DownLoad", "" + downloadingUser.getName());
 
-                                               userIDs.add(downloadingUser.getUserId());
-                                               Log.i("DownLoad",""+downloadingUser.getUserId());
+                           phoneNumbers.add(downloadingUser.getPhone_number());
+                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                                               adapter.notifyDataSetChanged();
+                           userIDs.add(downloadingUser.getUserId());
+                           Log.i("DownLoad", "" + downloadingUser.getUserId());
 
-                                           }
+                       }
+                   }
+                   else if(!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("") )
+                   {
+                       if(downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           titles.add(downloadingUser.getUser_type());
+                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                                           @Override
-                                           public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                           details.add(downloadingUser.getMajor());
+                           Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                                               User downloadingUser =  dataSnapshot.getValue(User.class);
+                           images.add(downloadingUser.getName());
+                           Log.i("DownLoad", "" + downloadingUser.getName());
 
-                                               titles.add(downloadingUser.getUser_type());
-                                               Log.i("DownLoad",""+downloadingUser.getUser_type());
-                                               details.add(downloadingUser.getMajor());
-                                               Log.i("DownLoad",""+downloadingUser.getMajor());
-                                               images.add(downloadingUser.getName());
-                                               Log.i("DownLoad",""+downloadingUser.getName());
+                           phoneNumbers.add(downloadingUser.getPhone_number());
+                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                                               phoneNumbers.add(downloadingUser.getPhone_number());
-                                               Log.i("DownLoad",""+downloadingUser.getPhone_number());
+                           userIDs.add(downloadingUser.getUserId());
+                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+                       }
+                   }
+                   else
+                   {
+                       titles.add(downloadingUser.getUser_type());
+                       Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                                               userIDs.add(dataSnapshot.getKey().toString());
-                                               Log.i("DownLoad",""+dataSnapshot.getKey().toString());
+                       details.add(downloadingUser.getMajor());
+                       Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                                               adapter.notifyDataSetChanged();
+                       images.add(downloadingUser.getName());
+                       Log.i("DownLoad", "" + downloadingUser.getName());
 
-                                           }
+                       phoneNumbers.add(downloadingUser.getPhone_number());
+                       Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                                           @Override
-                                           public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                       userIDs.add(downloadingUser.getUserId());
+                       Log.i("DownLoad", "" + downloadingUser.getUserId());
 
-                                           }
+                   }
 
-                                           @Override
-                                           public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                   adapter.notifyDataSetChanged();
+               }
 
-                                               User downloadingUser =  dataSnapshot.getValue(User.class);
+               @Override
+               public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
 
-                                               titles.add(downloadingUser.getUser_type());
-                                               Log.i("DownLoad",""+downloadingUser.getUser_type());
-                                               details.add(downloadingUser.getMajor());
-                                               Log.i("DownLoad",""+downloadingUser.getMajor());
+                   User downloadingUser =  dataSnapshot.getValue(User.class);
 
-                                               images.add(downloadingUser.getName());
-                                               Log.i("DownLoad",""+downloadingUser.getName());
+                   if(userType_listing.equals("Looking for Apartment")) {
 
-                                               phoneNumbers.add(downloadingUser.getPhone_number());
-                                               Log.i("DownLoad",""+downloadingUser.getPhone_number());
+                       if(!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           titles.add(downloadingUser.getUser_type());
+                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
 
-                                               userIDs.add(downloadingUser.getUserId());
-                                               Log.i("DownLoad",""+downloadingUser.getUserId());
+                           details.add(downloadingUser.getMajor());
+                           Log.i("DownLoad", "" + downloadingUser.getMajor());
 
-                                               adapter.notifyDataSetChanged();
-                                           }
+                           images.add(downloadingUser.getName());
+                           Log.i("DownLoad", "" + downloadingUser.getName());
 
-                                           @Override
-                                           public void onCancelled(DatabaseError databaseError) {
+                           phoneNumbers.add(downloadingUser.getPhone_number());
+                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
 
-                                           }
-                                       });
+                           userIDs.add(downloadingUser.getUserId());
+                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+
+                       }
+                   }
+                   else  if(!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("") )
+                   {
+                       if(downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           titles.add(downloadingUser.getUser_type());
+                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                           details.add(downloadingUser.getMajor());
+                           Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                           images.add(downloadingUser.getName());
+                           Log.i("DownLoad", "" + downloadingUser.getName());
+
+                           phoneNumbers.add(downloadingUser.getPhone_number());
+                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                           userIDs.add(downloadingUser.getUserId());
+                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+                       }
+                   }
+                   else
+                   {
+                       titles.add(downloadingUser.getUser_type());
+                       Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                       details.add(downloadingUser.getMajor());
+                       Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                       images.add(downloadingUser.getName());
+                       Log.i("DownLoad", "" + downloadingUser.getName());
+
+                       phoneNumbers.add(downloadingUser.getPhone_number());
+                       Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                       userIDs.add(downloadingUser.getUserId());
+                       Log.i("DownLoad", "" + downloadingUser.getUserId());
+
+                   }
+
+                   adapter.notifyDataSetChanged();
+
+               }
+
+               @Override
+               public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
+
+               }
+
+               @Override
+               public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+
+                   User downloadingUser =  dataSnapshot.getValue(User.class);
+
+                   if(userType_listing.equals("Looking for Apartment")) {
+
+                       if(!downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           titles.add(downloadingUser.getUser_type());
+                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                           details.add(downloadingUser.getMajor());
+                           Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                           images.add(downloadingUser.getName());
+                           Log.i("DownLoad", "" + downloadingUser.getName());
+
+                           phoneNumbers.add(downloadingUser.getPhone_number());
+                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                           userIDs.add(downloadingUser.getUserId());
+                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+
+                       }
+                   }
+                   else  if(!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("") )
+                   {
+                       if(downloadingUser.getUser_type().equals("Looking for Apartment")) {
+                           titles.add(downloadingUser.getUser_type());
+                           Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                           details.add(downloadingUser.getMajor());
+                           Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                           images.add(downloadingUser.getName());
+                           Log.i("DownLoad", "" + downloadingUser.getName());
+
+                           phoneNumbers.add(downloadingUser.getPhone_number());
+                           Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                           userIDs.add(downloadingUser.getUserId());
+                           Log.i("DownLoad", "" + downloadingUser.getUserId());
+                       }
+                   }
+                   else
+                   {
+                       titles.add(downloadingUser.getUser_type());
+                       Log.i("DownLoad", "" + downloadingUser.getUser_type());
+
+                       details.add(downloadingUser.getMajor());
+                       Log.i("DownLoad", "" + downloadingUser.getMajor());
+
+                       images.add(downloadingUser.getName());
+                       Log.i("DownLoad", "" + downloadingUser.getName());
+
+                       phoneNumbers.add(downloadingUser.getPhone_number());
+                       Log.i("DownLoad", "" + downloadingUser.getPhone_number());
+
+                       userIDs.add(downloadingUser.getUserId());
+                       Log.i("DownLoad", "" + downloadingUser.getUserId());
+
+                   }
+
+                   adapter.notifyDataSetChanged();
+
+               }
+
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
+
+               }
+           });
 
 
         adapter = new RecyclerAdapter(titles, details, images, userIDs, phoneNumbers, Listings.this);
@@ -175,4 +326,10 @@ public class Listings extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Created by Divyanshu Sharma on 11/29/2017.
+     */
+
+    public static class GlobalVariables {
+    }
 }
