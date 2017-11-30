@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut, nextAct, webViewAct, viewListings;
+            changeEmail, changePassword, sendEmail, remove, signOut, nextAct, webViewAct, viewListings,cancelEmailVerification;
 
     private EditText oldEmail, newEmail, password, newPassword;
     private TextView verifyEmailMessage;
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         changeEmail = (Button) findViewById(R.id.changeEmail);
         changePassword = (Button) findViewById(R.id.changePass);
         sendEmail = (Button) findViewById(R.id.send);
+        cancelEmailVerification = (Button) findViewById(R.id.cancel);
         remove = (Button) findViewById(R.id.remove);
         signOut = (Button) findViewById(R.id.sign_out);
         webViewAct = (Button) findViewById(R.id.webViewAct);
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         changeEmail.setVisibility(View.GONE);
         changePassword.setVisibility(View.GONE);
         sendEmail.setVisibility(View.GONE);
+        cancelEmailVerification.setVisibility(View.GONE);
         remove.setVisibility(View.GONE);
         verifyEmailMessage.setVisibility(View.GONE);
 
@@ -342,11 +344,10 @@ public class MainActivity extends AppCompatActivity {
                 changeEmail.setVisibility(View.GONE);
                 changePassword.setVisibility(View.GONE);
                 sendEmail.setVisibility(View.VISIBLE);
+                cancelEmailVerification.setVisibility(View.VISIBLE);
                 remove.setVisibility(View.GONE);
+                btnSendResetEmail.setVisibility(View.GONE);
 
-                /*
-                Make edit profile, listings and apartments go away
-                */
                 viewListings.setVisibility(View.GONE); // listing
                 webViewAct.setVisibility(View.GONE);  // apartments
                 nextAct.setVisibility(View.GONE);
@@ -360,12 +361,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        cancelEmailVerification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                oldEmail.setVisibility(View.GONE);
+                newEmail.setVisibility(View.GONE);
+                password.setVisibility(View.GONE);
+                newPassword.setVisibility(View.GONE);
+                changeEmail.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE);
+                sendEmail.setVisibility(View.GONE);
+                cancelEmailVerification.setVisibility(View.GONE);
+                remove.setVisibility(View.GONE);
+                viewListings.setVisibility(View.VISIBLE); // listing
+                webViewAct.setVisibility(View.VISIBLE);
+
+                if(user.isEmailVerified()==true) {
+                    // if email is verified show all this.. otherwise take away edit profile
+                    btnSendResetEmail.setVisibility(View.VISIBLE);
+                    nextAct.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+
+                    btnSendResetEmail.setVisibility(View.GONE);
+                    nextAct.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+
 
         sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                btnSendResetEmail.setVisibility(View.GONE);
+
                 progressBar.setVisibility(View.VISIBLE);
                 if (oldEmail.getText().toString().trim().equals(email)) {
                     auth.sendPasswordResetEmail(oldEmail.getText().toString().trim())

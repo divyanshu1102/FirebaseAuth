@@ -26,6 +26,11 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -55,8 +60,6 @@ public class BuildProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_profile);
-        //Firebase.setAndroidContext(this);
-
 
 
         name= (TextView) findViewById(R.id.name) ; // data 0 done
@@ -73,6 +76,73 @@ public class BuildProfile extends AppCompatActivity {
         bio = (MultiAutoCompleteTextView) findViewById(R.id.bio);
 
         seeAnswers = (Button) findViewById(R.id.seeAnswers);
+
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("data");
+        mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    User currentUser= dataSnapshot.getValue(User.class);
+
+
+                    name.setText(currentUser.getName());
+                    dateofBirth.setText(currentUser.getDate_of_birth());
+                    phoneNumber.setText(currentUser.getPhone_number());
+
+                    bio.setText(currentUser.getBio());
+
+                    if(currentUser.getGender().equals("Male"))
+                    {
+                        RadioButton male= (RadioButton) findViewById(R.id.male);
+                        male.setChecked(true);
+
+                    }
+                    else if(currentUser.getGender().equals("Female"))
+                    {
+                        RadioButton female= (RadioButton) findViewById(R.id.female);
+                        female.setChecked(true);
+                    }
+                    else if(currentUser.getGender().equals("Other"))
+                    {
+                        RadioButton other= (RadioButton) findViewById(R.id.otherGender);
+                        other.setChecked(true);
+                    }
+
+                    if(currentUser.getUser_type().equals("Looking for Apartment"))
+                    {
+                        RadioButton roommate= (RadioButton) findViewById(R.id.apartment);
+                        roommate.setChecked(true);
+                    }
+
+                    /*
+                    if(currentUser.getUser_type().equals("Looking for Roommate"))
+                    {
+                        RadioButton male= (RadioButton) findViewById(R.id.apartment);
+                        male.setChecked(true);
+                    }
+                    else if(!currentUser.getUser_type().equals(""))
+                    {
+                        RadioButton male= (RadioButton) findViewById(R.id.roommate);
+                        male.setChecked(true);
+                    }
+                    */
+                    //Toast.makeText(Listings.this,"User name: "+currentUser.getName()+" "+currentUser.getUser_type(),Toast.LENGTH_SHORT).show();
+                    //userType_listing=currentUser.getUser_type().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                //userType_listing="";
+                Toast.makeText(BuildProfile.this,"Firebase Error Occured",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
 
         //seeAnswers.setClickable(false);
         //seeAnswers.setAlpha(0.7f);
