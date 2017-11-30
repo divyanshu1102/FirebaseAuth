@@ -8,6 +8,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,9 +37,11 @@ public class BuildProfile extends AppCompatActivity {
     private TextView name, dateofBirth,phoneNumber;
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.75F);
+    private Button seeAnswers;
 
-    int day, month, year;
-    TextView dateOfBirth;
+    private int day=0, month=0, year=0;
+    private boolean allFieldsComplete= true;
+    private TextView dateOfBirth;
 
     private FirebaseAuth auth1= FirebaseAuth.getInstance();
     Firebase reference= new Firebase("https://testingfirebase2-baa5c.firebaseio.com/");
@@ -67,6 +70,10 @@ public class BuildProfile extends AppCompatActivity {
 
         bio = (MultiAutoCompleteTextView) findViewById(R.id.bio);
 
+        seeAnswers = (Button) findViewById(R.id.seeAnswers);
+
+        //seeAnswers.setClickable(false);
+        //seeAnswers.setAlpha(0.7f);
 
         Question0_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -195,68 +202,54 @@ public class BuildProfile extends AppCompatActivity {
 
 
 
-        Button seeAnswers = (Button) findViewById(R.id.seeAnswers);
-
-
-        seeAnswers.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageButton view = (ImageButton) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        v.startAnimation(buttonClick);
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-
-                return false;
-            }
-        });
-
-
 
 
         seeAnswers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                allFieldsComplete=true;
+                answers[8] = bio.getText().toString();
+                answers[9] = phoneNumber.getText().toString();
 
-                Toast.makeText(getApplicationContext(),"Button clicked",Toast.LENGTH_SHORT).show();
-                answers[8]= bio.getText().toString();
-                answers[9]= phoneNumber.getText().toString();
+                answers[0] = name.getText().toString();  // name done
 
-                answers[0]= name.getText().toString();  // name done
-                answers[1]= ""+day+"/"+(month+1)+"/"+year; // date of birth done
+                answers[1] = "" + day + "/" + (month + 1) + "/" + year; // date of birth done
 
-                User user = new User(answers[0],answers[1],answers[2],answers[3],answers[4],answers[5],answers[6],answers[7],answers[8],answers[9]);
 
                 for(int i=0;i<=9;i++)
-                Log.i("answer",answers[i]);
+                {
+                    Log.i("answer",answers[i]);
+                    if(answers[i].equals("-99") || answers[i].equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(),"Please Fill all sections",Toast.LENGTH_SHORT).show();
+                        allFieldsComplete= false;
+                        break;
+                    }
+                    else
+                        continue;
+                }
 
-                // name, date_of_birth, gender, user_type, major, sleep_Preferences,cleaning_Frequency, guests, bio, phone_Number
 
-                databaseReference.child("name").setValue(user.getName());
-                databaseReference.child("date_of_birth").setValue(user.getDate_of_birth());
-                databaseReference.child("gender").setValue(user.getGender());
-                databaseReference.child("user_type").setValue(user.getUser_type());
-                databaseReference.child("major").setValue(user.getMajor());
-                databaseReference.child("sleep_Preferences").setValue(user.getSleep_Preferences());
-                databaseReference.child("cleaning_Frequency").setValue(user.getCleaning_Frequency());
-                databaseReference.child("guests").setValue(user.getGuests());
-                databaseReference.child("bio").setValue(user.getBio());
-                databaseReference.child("phone_number").setValue(user.getphone_Number());
+                if(allFieldsComplete== true)
+                {
+                    Toast.makeText(getApplicationContext(), "Profile Saved", Toast.LENGTH_SHORT).show();
+                    User user = new User(answers[0], answers[1], answers[2], answers[3], answers[4], answers[5], answers[6], answers[7], answers[8], answers[9]);
+
+                    // name, date_of_birth, gender, user_type, major, sleep_Preferences,cleaning_Frequency, guests, bio, phone_Number
+
+                    databaseReference.child("name").setValue(user.getName());
+                    databaseReference.child("date_of_birth").setValue(user.getDate_of_birth());
+                    databaseReference.child("gender").setValue(user.getGender());
+                    databaseReference.child("user_type").setValue(user.getUser_type());
+                    databaseReference.child("major").setValue(user.getMajor());
+                    databaseReference.child("sleep_Preferences").setValue(user.getSleep_Preferences());
+                    databaseReference.child("cleaning_Frequency").setValue(user.getCleaning_Frequency());
+                    databaseReference.child("guests").setValue(user.getGuests());
+                    databaseReference.child("bio").setValue(user.getBio());
+                    databaseReference.child("phone_number").setValue(user.getPhone_number());
+
+                }
 
             }
         });
@@ -272,6 +265,7 @@ public class BuildProfile extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     @Deprecated

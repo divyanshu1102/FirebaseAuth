@@ -43,6 +43,8 @@ public class Listings extends AppCompatActivity {
     private ArrayList<String> titles=new ArrayList<String>();
     private ArrayList<String> details=new ArrayList<String>();
     private ArrayList<String> images=new ArrayList<String>();
+    private ArrayList<String> userIDs= new ArrayList<String>();
+    private ArrayList<String> phoneNumbers= new ArrayList<String>();
 
 
 
@@ -72,11 +74,18 @@ public class Listings extends AppCompatActivity {
 
                                                titles.add(downloadingUser.getUser_type());
                                                Log.i("DownLoad",""+downloadingUser.getUser_type());
+
                                                details.add(downloadingUser.getMajor());
                                                Log.i("DownLoad",""+downloadingUser.getMajor());
+
                                                images.add(downloadingUser.getName());
                                                Log.i("DownLoad",""+downloadingUser.getName());
 
+                                               phoneNumbers.add(downloadingUser.getPhone_number());
+                                               Log.i("DownLoad",""+downloadingUser.getPhone_number());
+
+                                               userIDs.add(downloadingUser.getUserId());
+                                               Log.i("DownLoad",""+downloadingUser.getUserId());
 
                                                adapter.notifyDataSetChanged();
 
@@ -94,6 +103,11 @@ public class Listings extends AppCompatActivity {
                                                images.add(downloadingUser.getName());
                                                Log.i("DownLoad",""+downloadingUser.getName());
 
+                                               phoneNumbers.add(downloadingUser.getPhone_number());
+                                               Log.i("DownLoad",""+downloadingUser.getPhone_number());
+
+                                               userIDs.add(dataSnapshot.getKey().toString());
+                                               Log.i("DownLoad",""+dataSnapshot.getKey().toString());
 
                                                adapter.notifyDataSetChanged();
 
@@ -113,9 +127,15 @@ public class Listings extends AppCompatActivity {
                                                Log.i("DownLoad",""+downloadingUser.getUser_type());
                                                details.add(downloadingUser.getMajor());
                                                Log.i("DownLoad",""+downloadingUser.getMajor());
+
                                                images.add(downloadingUser.getName());
                                                Log.i("DownLoad",""+downloadingUser.getName());
 
+                                               phoneNumbers.add(downloadingUser.getPhone_number());
+                                               Log.i("DownLoad",""+downloadingUser.getPhone_number());
+
+                                               userIDs.add(downloadingUser.getUserId());
+                                               Log.i("DownLoad",""+downloadingUser.getUserId());
 
                                                adapter.notifyDataSetChanged();
                                            }
@@ -127,7 +147,7 @@ public class Listings extends AppCompatActivity {
                                        });
 
 
-        adapter = new RecyclerAdapter(titles, details, images,this);
+        adapter = new RecyclerAdapter(titles, details, images, userIDs, phoneNumbers, Listings.this);
         recyclerView.setAdapter(adapter);
 
     }

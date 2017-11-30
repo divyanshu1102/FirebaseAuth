@@ -8,7 +8,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class User {
 
-    private String name, date_of_birth, gender, user_type, major, sleep_Preferences,cleaning_Frequency, guests, bio, phone_Number;
+    private String name;
+    private String date_of_birth;
+    private String gender;
+    private String user_type;
+    private String major;
+    private String sleep_Preferences;
+    private String cleaning_Frequency;
+    private String guests;
+    private String bio;
+    private String phone_Number;
+    private String UserId;
+
+
 
     public User(String name, String date_of_birth, String gender, String user_type, String major, String sleep_Preferences, String cleaning_Frequency, String guests, String bio, String phone_Number) {
         this.name = name;
@@ -21,11 +33,21 @@ public class User {
         this.guests = guests;
         this.bio = bio;
         this.phone_Number= phone_Number;
+
     }
 
     public User( ) {
 
 
+    }
+
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 
 
@@ -57,7 +79,7 @@ public class User {
         return major;
     }
 
-    public String getphone_Number() {
+    public String getPhone_number() {
         return phone_Number;
     }
 
@@ -87,7 +109,7 @@ public class User {
         return guests;
     }
 
-    public void setphone_Number(String phone_Number) {
+    public void setPhone_number(String phone_Number) {
 
         this.phone_Number= phone_Number;
     }
@@ -107,12 +129,12 @@ public class User {
 
     public String getName() {
         return name;
-
     }
 
     public void setName(String name) {
         this.name = name;
     }
+
 
 
 }

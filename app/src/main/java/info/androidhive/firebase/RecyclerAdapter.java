@@ -23,6 +23,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<String> titles=new ArrayList<String>();
     private ArrayList<String> details=new ArrayList<String>();
     private ArrayList<String> images=new ArrayList<String>();
+    private ArrayList<String> userIDs=new ArrayList<String>();
+    private ArrayList<String> phoneNumbers=new ArrayList<String>();
+
     private Context context;
 
 
@@ -31,10 +34,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 
-    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images,Context context) {
+    public RecyclerAdapter(ArrayList<String> titles, ArrayList<String> details, ArrayList<String> images, ArrayList<String> userIDs, ArrayList<String> phoneNumbers, Context context) {
+
+        this.context= context;
         this.titles = titles;
         this.details = details;
         this.images = images;
+        this.userIDs= userIDs;
+        this.phoneNumbers= phoneNumbers;
     }
 
     /*
@@ -77,15 +84,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 @Override public void onClick(View v) {
                     int position = getAdapterPosition();
 
-                    Snackbar.make(v, "Click detected on item " + position,
+                    /*
+                    Snackbar.make(v, "Item at "+position +"Phone Number:"+phoneNumbers.get(position),
                             Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    */
+                    //userIDs.get(position)
+                    //Intent intent = new Intent(context,Communication.class);
+                    //intent.putExtra("Phone",""+phoneNumbers.get(position));
+                    //context.startActivity(intent);
+                    context.startActivity(new Intent(context, Communication.class).putExtra("Phone",""+phoneNumbers.get(position)));
 
-
-                    //Intent myIntent = new Intent(context, Communication.class);
-                    //v.getContext().startActivity(myIntent);
-                    //Intent myIntent = new Intent(context, Communication.class);
-                    //context.startActivities(myIntent);
                 }
             });
         }
