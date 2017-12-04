@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         cancelEmailVerification.setVisibility(View.GONE);
         remove.setVisibility(View.GONE);
         verifyEmailMessage.setVisibility(View.GONE);
+        viewListings.setVisibility(View.GONE);
 
         ////////////////////////////////////////////////
         btnChangeEmail.setVisibility(View.GONE);
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             verifyEmail.setVisibility(View.GONE);
             btnSendResetEmail.setVisibility(View.VISIBLE);
             nextAct.setVisibility(View.VISIBLE);
+            viewListings.setVisibility(View.VISIBLE);
         }
 
 
@@ -374,20 +376,21 @@ public class MainActivity extends AppCompatActivity {
                 sendEmail.setVisibility(View.GONE);
                 cancelEmailVerification.setVisibility(View.GONE);
                 remove.setVisibility(View.GONE);
-                viewListings.setVisibility(View.VISIBLE); // listing
+                viewListings.setVisibility(View.GONE); // listing
                 webViewAct.setVisibility(View.VISIBLE);
 
                 if(user.isEmailVerified()==true) {
                     // if email is verified show all this.. otherwise take away edit profile
                     btnSendResetEmail.setVisibility(View.VISIBLE);
                     nextAct.setVisibility(View.VISIBLE);
+                    viewListings.setVisibility(View.VISIBLE);
+
                 }
                 else
                 {
-
+                    viewListings.setVisibility(View.GONE);
                     btnSendResetEmail.setVisibility(View.GONE);
                     nextAct.setVisibility(View.GONE);
-
                 }
 
             }

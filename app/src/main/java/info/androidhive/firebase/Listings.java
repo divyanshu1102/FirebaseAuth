@@ -75,7 +75,7 @@ public class Listings extends AppCompatActivity {
                 {
                        User currentUser= dataSnapshot.getValue(User.class);
                     //Toast.makeText(Listings.this,"User name: "+currentUser.getName()+" "+currentUser.getUser_type(),Toast.LENGTH_SHORT).show();
-                    userType_listing=currentUser.getUser_type().toString();
+                    if (userType_listing!=null)userType_listing=currentUser.getUser_type().toString();
                 }
             }
 
@@ -95,7 +95,7 @@ public class Listings extends AppCompatActivity {
 
                    User downloadingUser =  dataSnapshot.getValue(User.class);
 
-                        if (userType_listing.equals("Looking for Apartment")) {
+                   if (userType_listing!=null && userType_listing.equals("Looking for Apartment")) {
 
                             if (!downloadingUser.getUser_type().equals("Looking for Apartment")) {
 
@@ -125,7 +125,7 @@ public class Listings extends AppCompatActivity {
                                 //Log.i("DownLoad", "" + downloadingUser.getUserId());
 
                             }
-                        } else if (!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
+                        } else if (userType_listing!=null && !userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
                             if (downloadingUser.getUser_type().equals("Looking for Apartment")) {
 
                                 titles.add(downloadingUser.getUser_type());
@@ -182,7 +182,8 @@ public class Listings extends AppCompatActivity {
                         /*if ((downloadingUser.getUser_type().equals("Looking for Apartment") && ( filter_major.equals(downloadingUser.getMajor()) && filter_cleaning.equals(downloadingUser.getCleaning_Frequency()) && filter_gender.equals(downloadingUser.getGender()) && filter_guest.equals(downloadingUser.getGuests()) && filter_sleeping.equals(downloadingUser.getSleep_Preferences())) )
                                 )
                         {*/
-                       if (userType_listing.equals("Looking for Apartment")) {
+
+                       if (userType_listing!=null && userType_listing.equals("Looking for Apartment")) {
 
                            if (!downloadingUser.getUser_type().equals("Looking for Apartment")) {
                                titles.add(downloadingUser.getUser_type());
@@ -206,7 +207,7 @@ public class Listings extends AppCompatActivity {
                                bio.add(downloadingUser.getBio());
 
                            }
-                       } else if (!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
+                       } else if (userType_listing!=null && !userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
                            if (downloadingUser.getUser_type().equals("Looking for Apartment")) {
                                titles.add(downloadingUser.getUser_type());
                                Log.i("DownLoad", "" + downloadingUser.getUser_type());
@@ -267,7 +268,7 @@ public class Listings extends AppCompatActivity {
 
                    /*if((downloadingUser.getUser_type().equals("Looking for Apartment") && ( filter_major.equals(downloadingUser.getMajor()) && filter_cleaning.equals(downloadingUser.getCleaning_Frequency()) && filter_gender.equals(downloadingUser.getGender()) && filter_guest.equals(downloadingUser.getGuests()) && filter_sleeping.equals(downloadingUser.getSleep_Preferences())) )
                            ) {*/
-                       if (userType_listing.equals("Looking for Apartment")) {
+                       if (userType_listing!=null && userType_listing.equals("Looking for Apartment")) {
 
                            if (!downloadingUser.getUser_type().equals("Looking for Apartment")) {
                                titles.add(downloadingUser.getUser_type());
@@ -291,7 +292,7 @@ public class Listings extends AppCompatActivity {
                                bio.add(downloadingUser.getBio());
 
                            }
-                       } else if (!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
+                       } else if (userType_listing!=null &&!userType_listing.equals("Looking for Apartment") && !userType_listing.equals("")) {
                            if (downloadingUser.getUser_type().equals("Looking for Apartment")) {
                                titles.add(downloadingUser.getUser_type());
                                Log.i("DownLoad", "" + downloadingUser.getUser_type());

@@ -86,31 +86,30 @@ public class BuildProfile extends AppCompatActivity {
                 {
                     User currentUser= dataSnapshot.getValue(User.class);
 
-
                     name.setText(currentUser.getName());
                     dateofBirth.setText(currentUser.getDate_of_birth());
                     phoneNumber.setText(currentUser.getPhone_number());
 
                     bio.setText(currentUser.getBio());
 
-                    if(currentUser.getGender().equals("Male"))
+                    if(currentUser.getGender()!=null && currentUser.getGender().equals("Male"))
                     {
                         RadioButton male= (RadioButton) findViewById(R.id.male);
                         male.setChecked(true);
 
                     }
-                    else if(currentUser.getGender().equals("Female"))
+                    else if(currentUser.getGender()!=null && currentUser.getGender().equals("Female"))
                     {
                         RadioButton female= (RadioButton) findViewById(R.id.female);
                         female.setChecked(true);
                     }
-                    else if(currentUser.getGender().equals("Other"))
+                    else if(currentUser.getGender()!=null && currentUser.getGender().equals("Other"))
                     {
                         RadioButton other= (RadioButton) findViewById(R.id.otherGender);
                         other.setChecked(true);
                     }
 
-                    if(currentUser.getUser_type().equals("Looking for Apartment"))
+                    if(currentUser.getUser_type()!=null && currentUser.getUser_type().equals("Looking for Apartment"))
                     {
                         RadioButton roommate= (RadioButton) findViewById(R.id.apartment);
                         roommate.setChecked(true);
